@@ -22,6 +22,7 @@ export const useTDModel = () => {
   const [calCabTie, setCalCabTie] = useState('');
   const [matCabTie, setMatCabTie] = useState('');
   const [long, setLong] = useState('');
+  const [canYmed, setCanYmed] = useState('');
   const [protectionTab, setProtectionTab] = useState(false);
   const [marYModTab, setMarYModTab] = useState('');
   const [tenNomTab, setTenNomTab] = useState('');
@@ -29,6 +30,24 @@ export const useTDModel = () => {
   const [ICCTab, setICCTab] = useState('');
   const [noPolTab, setNoPolTab] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const [nombreCarga, setNombreCarga] = useState('');
+  const [formaRegistro, setFormaRegistro] = useState('');
+  const [icc, setIcc] = useState('');
+  const [noFasesCal, setNoFasesCal] = useState('');
+  const [noNeutrosCal, setNoNeutrosCal] = useState('');
+  const [noTierrasCal, setNoTierrasCal] = useState('');
+  const [canal, setCanal] = useState('');
+  const [longuitud, setLonguitud] = useState('');
+  const [elementosFormaRegistro, setElementosFormaRegistro] = useState([]);
+  const [barrasNeutros, setBarrasNeutros] = useState(false);
+  const [cargas, setCargas] = useState([]);
+  const [puenteUnion, setPuenteUnion] = useState(false);
+  const [barraTierra, setBarraTierra] = useState(false);
+  const [val1, setVal1] = useState('');
+  const [val2, setVal2] = useState('');
+
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -52,11 +71,13 @@ export const useTDModel = () => {
         calCabTie.trim() === '' ||
         matCabTie.trim() === '' ||
         long.trim() === '' ||
+        canYmed.trim('') === '' ||
         marYModTab.trim() === '' ||
         tenNomTab.trim() === '' ||
         corrNomTab.trim() === '' ||
         ICCTab.trim() === '' ||
-        noPolTab.trim() === ''
+        noPolTab.trim() === '' 
+        
       ) {
         alert('Por favor completa todos los campos.');
         setLoading(false);
@@ -91,12 +112,17 @@ export const useTDModel = () => {
           matCabTie,
         }],
         long,
+        canYmed,
         protectionTab,
         marYModTab,
         tenNomTab,
         corrNomTab,
         ICCTab,
         noPolTab,
+        cargas,
+        barrasNeutros,
+        puenteUnion,
+        barraTierra,
         date: date ? date.toISOString().substring(0, 10).replace('T', '-') : '',
       });
 
@@ -113,6 +139,7 @@ export const useTDModel = () => {
   };
 
   const resetFormTD = () => {
+    setCargas([]);
     setName('');
     setNameTablero('');
     setIdTDTab('');
@@ -137,9 +164,23 @@ export const useTDModel = () => {
     setTenNomTab('');
     setCorrNomTab('');
     setICCTab('');
+    setCanYmed('');
     setNoPolTab('');
     setDate(new Date());
     setLoading(false);
+    setNombreCarga('');
+    setElementosFormaRegistro([]);
+    setIcc('');
+    setNoFasesCal('');
+    setNoNeutrosCal('');
+    setNoTierrasCal('');
+    setCanal('');
+    setLonguitud('');
+    setVal1('');
+    setVal2('');
+    setBarrasNeutros(false);
+    setPuenteUnion(false);
+    setBarraTierra(false);
   };
 
 
@@ -184,6 +225,8 @@ export const useTDModel = () => {
     setMatCabTie,
     long,
     setLong,
+    canYmed,
+    setCanYmed,
     protectionTab,
     setProtectionTab,
     marYModTab,
@@ -199,6 +242,36 @@ export const useTDModel = () => {
     handleSubmit,
     loading,
     setLoading,
+    nombreCarga,
+    setNombreCarga,
+    elementosFormaRegistro,
+    setElementosFormaRegistro,
+    formaRegistro,
+    setFormaRegistro,
+    icc,
+    setIcc,
+    noFasesCal,
+    setNoFasesCal,
+    noNeutrosCal,
+    setNoNeutrosCal,
+    noTierrasCal,
+    setNoTierrasCal,
+    canal,
+    setCanal,
+    longuitud,
+    setLonguitud,
+    barrasNeutros,
+    setBarrasNeutros,
+    puenteUnion,
+    setPuenteUnion,
+    barraTierra,
+    setBarraTierra,
+    val1,
+    setVal1,
+    val2,
+    setVal2,
+    cargas,
+    setCargas,
   };
 };
 
@@ -409,6 +482,24 @@ export const useTGDModel = () => {
   const [date, setDate] = useState(new Date());
   const [protectionTab, setProtectionTab] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [canYmed, setCanYmed] = useState('');
+
+  const [nombreCarga, setNombreCarga] = useState('');
+  const [formaRegistro, setFormaRegistro] = useState('');
+  const [icc, setIcc] = useState('');
+  const [noFasesCal, setNoFasesCal] = useState('');
+  const [noNeutrosCal, setNoNeutrosCal] = useState('');
+  const [noTierrasCal, setNoTierrasCal] = useState('');
+  const [canal, setCanal] = useState('');
+  const [longuitud, setLonguitud] = useState('');
+  const [elementosFormaRegistro, setElementosFormaRegistro] = useState([]);
+  const [barrasNeutros, setBarrasNeutros] = useState(false);
+  const [cargas, setCargas] = useState([]);
+  const [puenteUnion, setPuenteUnion] = useState(false);
+  const [barraTierra, setBarraTierra] = useState(false);
+  const [val1, setVal1] = useState('');
+  const [val2, setVal2] = useState('');
+
 
   const handleSubmit = async () => {
     try {
@@ -417,7 +508,7 @@ export const useTGDModel = () => {
         !ICC || !noPolos || !INOM || !noPolos2 || !marcYTipTrans || !KVA || !tensDivisor ||
         !tensCociente || !conexion || !porcZ || !noCabFas || !calCabFas || !matCabFas ||
         !noCabNeu || !calCabNeu || !matCabNeu || !noCabTie || !calCabTie || !matCabTie ||
-        !long) {
+        !long || !canYmed) {
         alert('Por favor, completa todos los campos.');
         setLoading(false);
         return;
@@ -456,10 +547,15 @@ export const useTGDModel = () => {
           matCabTie,
         }],
         long,
+        canYmed,
         protectionTab,
+        cargas,
+        barrasNeutros,
+        puenteUnion,
+        barraTierra,
         date: date ? date.toISOString().substring(0, 10).replace('T', '-') : '',
       });
-  
+
       if (success) {
         resetFormTGD();
         alert('Registro-TGD guardado exitosamente!');
@@ -470,11 +566,12 @@ export const useTGDModel = () => {
 
     } catch (error) {
       setLoading(false);
-      alert('Ocurrió un error al guardar el Registro-TGD. Por favor, inténtalo de nuevo.');  
+      alert('Ocurrió un error al guardar el Registro-TGD. Por favor, inténtalo de nuevo.');
     }
   }
 
   const resetFormTGD = () => {
+    setCargas([]);
     setNameTablero('');
     setName('');
     setIdTGDTab('');
@@ -501,10 +598,24 @@ export const useTGDModel = () => {
     setNoCabTie('');
     setCalCabTie('');
     setMatCabTie('');
+    setCanYmed('');
     setLong('');
     setProtectionTab(false);
     setDate(new Date());
     setLoading(false);
+    setNombreCarga('');
+    setElementosFormaRegistro([]);
+    setIcc('');
+    setNoFasesCal('');
+    setNoNeutrosCal('');
+    setNoTierrasCal('');
+    setCanal('');
+    setLonguitud('');
+    setVal1('');
+    setVal2('');
+    setBarrasNeutros(false);
+    setPuenteUnion(false);
+    setBarraTierra(false);
   };
 
   return {
@@ -556,6 +667,8 @@ export const useTGDModel = () => {
     setMatCabNeu,
     noCabTie,
     setNoCabTie,
+    canYmed,
+    setCanYmed,
     calCabTie,
     setCalCabTie,
     matCabTie,
@@ -569,6 +682,36 @@ export const useTGDModel = () => {
     date,
     setDate,
     handleSubmit,
+    nombreCarga,
+    setNombreCarga,
+    elementosFormaRegistro,
+    setElementosFormaRegistro,
+    formaRegistro,
+    setFormaRegistro,
+    icc,
+    setIcc,
+    noFasesCal,
+    setNoFasesCal,
+    noNeutrosCal,
+    setNoNeutrosCal,
+    noTierrasCal,
+    setNoTierrasCal,
+    canal,
+    setCanal,
+    longuitud,
+    setLonguitud,
+    barrasNeutros,
+    setBarrasNeutros,
+    puenteUnion,
+    setPuenteUnion,
+    barraTierra,
+    setBarraTierra,
+    val1,
+    setVal1,
+    val2,
+    setVal2,
+    cargas,
+    setCargas,
   };
 
 };

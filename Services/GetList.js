@@ -102,6 +102,7 @@ export const getListTD = async () => {
                         calCabTie: doc.data().Tierras[0].calCabTie,
                         matCabTie: doc.data().Tierras[0].matCabTie,
                     }],
+                canYmed : doc.data().canYmed,
                 long: doc.data().long,
                 protectionTab: doc.data().protectionTab ? "Si" : "No",
                 marYModTab: doc.data().marYModTab,
@@ -109,6 +110,10 @@ export const getListTD = async () => {
                 corrNomTab: doc.data().corrNomTab,
                 ICCTab: doc.data().ICCTab,
                 noPolTab: doc.data().noPolTab,
+                cargas: doc.data().cargas,
+                barrasNeutros: doc.data().barrasNeutros ? "Si" : "No",
+                puenteUnion: doc.data().puenteUnion ? "Si" : "No",
+                barraTierra: doc.data().barraTierra ? "Si" : "No",
             });
         });
         return (usersList);
@@ -164,8 +169,13 @@ export const getListTGD = async () => {
                         matCabTie: doc.data().Tierras[0].matCabTie,
                     }
                 ],
+                canYmed : doc.data().canYmed,
                 long: doc.data().long,
                 protectionTab: doc.data().protectionTab ? "Si" : "No",
+                cargas: doc.data().cargas,
+                barrasNeutros: doc.data().barrasNeutros ? "Si" : "No",
+                puenteUnion: doc.data().puenteUnion ? "Si" : "No",
+                barraTierra: doc.data().barraTierra ? "Si" : "No",
                 date: doc.data().date
             });
         });
