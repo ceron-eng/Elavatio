@@ -1,15 +1,16 @@
 // File: SaveTDView.js
 
-import React, { useState } from 'react';
-import { View, ActivityIndicator, TouchableOpacity, TextInput, Text, Button, ScrollView, Dimensions, FlatList, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ActivityIndicator, TouchableOpacity, TextInput, Text, Button, ScrollView, Dimensions, SectionList, Alert } from 'react-native';
 import { format } from 'date-fns';
 import { styles } from '../Styles/SaveTDViewStyles'
+import { updateTD } from '../Services/ServicesRegistros'
 import Pagination from '../Filters/Paginacion';
 import { useTDModel } from '../ModelsViews/ModelViewAll' // Importar el modelo
 
 const ITEMS_PER_PAGE = 2;
 
-const SaveTDView = () => {
+const EditTDView = ({ route, navigation }) => {
   const {
     name,
     setName,
@@ -98,9 +99,7 @@ const SaveTDView = () => {
     cargas,
     setCargas,
   } = useTDModel();
-
   const [currentPage, setCurrentPage] = useState(0);
-
   const startIndex = currentPage * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedCargas = cargas.slice(startIndex, endIndex);
@@ -112,11 +111,60 @@ const SaveTDView = () => {
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
   };
+  const { user } = route.params;
+  const [id] = useState(user.idDoc);
+
   const editarCarga = (text, campo, index) => {
     const nuevasCargas = [...cargas];
     nuevasCargas[index][campo] = text;
     setCargas(nuevasCargas);
   };
+
+  useEffect(() => {
+    setName(user.name);
+    setNameTablero(user.nameTablero);
+    setIdTDTab(user.idTDTab);
+    setProtectionFuen(user.protectionFuen === 'Si' ? true : false);
+    setMarYMod(user.marYMod);
+    setTenNom(user.tenNom);
+    setCorrNom(user.corrNom);
+    setICC(user.ICC);
+    setNoPol(user.noPol);
+    setNoCabFas(user.Fases[0].noCabFas);
+    setCalCabFas(user.Fases[0].calCabFas);
+    setMatCabFas(user.Fases[0].matCabFas);
+    setNoCabNeu(user.Neutros[0].noCabNeu);
+    setCalCabNeu(user.Neutros[0].calCabNeu);
+    setMatCabNeu(user.Neutros[0].matCabNeu);
+    setNoCabTie(user.Tierras[0].noCabTie);
+    setCalCabTie(user.Tierras[0].calCabTie);
+    setMatCabTie(user.Tierras[0].matCabTie);
+    setLong(user.long);
+    setCanYmed(user.canYmed);
+    setProtectionTab(user.protectionTab === 'Si' ? true : false);
+    setMarYModTab(user.marYModTab);
+    setTenNomTab(user.tenNomTab);
+    setCorrNomTab(user.corrNomTab);
+    setICCTab(user.ICCTab);
+    setNoPolTab(user.noPolTab);
+    setFormaRegistro(user.formaRegistro);
+    setBarrasNeutros(item.barrasNeutros === 'Si' ? true : false);
+    setPuenteUnion(item.puenteUnion === 'Si' ? true : false);
+    setBarraTierra(item.barraTierra === 'Si' ? true : false);
+    const cargaData = user.cargas.map(carga => ({
+      nombreCar: carga.nombreCar,
+      icc: carga.icc,
+      noFasesCal: carga.noFasesCal,
+      noNeutrosCal: carga.noNeutrosCal,
+      noTierrasCal: carga.noTierrasCal,
+      canal: carga.canal,
+      longuitud: carga.longuitud,
+      val1In: carga.val1In,
+      val2In: carga.val2In,
+    }));
+    setCargas(cargaData);
+
+  }, []);
 
   const windowWidth = Dimensions.get('window').width;
 
@@ -152,6 +200,65 @@ const SaveTDView = () => {
     nuevasCargas.splice(index, 1);
     setCargas(nuevasCargas);
   };
+
+  async function actualizarTD() {
+    setLoading(true);
+    try {
+
+      const TDData = {
+        id,
+        name,
+        nameTablero,
+        idTDTab,
+        protectionFuen,
+        marYMod,
+        tenNom,
+        corrNom,
+        ICC,
+        noPol,
+        date,
+        noCabFas,
+        calCabFas,
+        matCabFas,
+        noCabNeu,
+        calCabNeu,
+        matCabNeu,
+        noCabTie,
+        calCabTie,
+        matCabTie,
+        long,
+        canYmed,
+        protectionTab,
+        marYModTab,
+        tenNomTab,
+        corrNomTab,
+        ICCTab,
+        noPolTab,
+        nombreCarga,
+        barraTierra,
+        puenteUnion,
+        barrasNeutros,
+        cargas,
+        date
+      };
+
+      const confirm = await updateTD(TDData);
+
+      if (confirm.success) {
+        Alert.alert("Actualización exitosa", "Se ha actualizado el registro correctamente");
+        navigation.goBack();
+      } else {
+        Alert.alert("Error de actualización", confirm.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(error.message);
+      Alert.alert("Error de actualización", error.message);
+    }
+
+  }
+
 
   return (
     <ScrollView style={[styles.text, { width: windowWidth - 40 }]}>
@@ -479,8 +586,8 @@ const SaveTDView = () => {
       </TouchableOpacity>
 
       <View>
-        <FlatList
-          data={paginatedCargas}
+        <SectionList
+          sections={[{ title: 'Cargas', data: paginatedCargas }]}
           renderItem={({ item, index }) => (
             <View style={styles.tableContainer}>
               <View style={styles.tableRow}>
@@ -524,15 +631,21 @@ const SaveTDView = () => {
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={() => (
+            <>
+              <Text>Total de cargas: {cargas.length}</Text>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onNextPage={handleNextPage}
+                onPrevPage={handlePrevPage}
+              />
+            </>
+          )}
         />
-        <Text>Total de cargas: {cargas.length}</Text>
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onNextPage={handleNextPage}
-          onPrevPage={handlePrevPage}
-        />
+
       </View>
+
 
       <View style={[styles.switchContainer, styles.marginBottom]}>
         <Text style={styles.label}>Barras de neutros</Text>
@@ -573,7 +686,7 @@ const SaveTDView = () => {
             if (cargas.length === 0) {
               Alert.alert('Error', 'Debes agregar al menos una carga antes de guardar el registro.');
             } else {
-              handleSubmit();
+              actualizarTD();
             }
           }}
         >
@@ -584,4 +697,4 @@ const SaveTDView = () => {
   );
 };
 
-export default SaveTDView;
+export default EditTDView;

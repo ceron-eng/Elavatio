@@ -34,9 +34,10 @@ export const registerUser = async (name, lastName,lastName2,username, password, 
 };
 
 
-export const updateUser = async (userId, name, lastName, lastName2, username, password, rol) => {
+export const updateUser = async (userData) => {
     try {
-      const userDoc = doc(db, "usuarios", userId);
+      console.log(userData);
+      const userDoc = doc(db, "usuarios", userData.id);
       
       const userSnapshot = await getDoc(userDoc);
      
@@ -44,21 +45,21 @@ export const updateUser = async (userId, name, lastName, lastName2, username, pa
         return { success: false, message: "El usuario no existe" };
       }
   
-      var size = await userExist(username);
+      var size = await userExist(userData.Username);
       if (size >= 2) {
         return { success: false, message: "El usuario ya existe" };
       }
 
       const saltRounds = 5;
-      const hashedPassword = bcrypt.hashSync(password, saltRounds);
+      const hashedPassword = bcrypt.hashSync(userData.Password, saltRounds);
   
       await updateDoc(userDoc, {
-        Name: name,
-        LastName: lastName,
-        LastName2: lastName2,
-        Username: username,
+        Name: userData.Name,
+        LastName: userData.LastName,
+        LastName2: userData.LastName2,
+        Username: userData.Username,
         Password: hashedPassword,
-        Rol: rol,
+        Rol: userData.Rol,
       });
   
       return { success: true };

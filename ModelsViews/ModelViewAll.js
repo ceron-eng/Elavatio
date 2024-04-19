@@ -183,8 +183,6 @@ export const useTDModel = () => {
     setBarraTierra(false);
   };
 
-
-
   return {
     name,
     setName,
@@ -372,6 +370,7 @@ export const useCCMModel = () => {
         setLoading(false);
         alert('Registro-CMM guardado exitosamente!');
       } else {
+        setLoading(false);
         alert('Ocurrió un error al guardar el Registro-CMM. Por favor, inténtalo de nuevo.');
       }
     } catch (error) {

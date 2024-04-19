@@ -6,14 +6,22 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import SaveTDView from './SaveTDView';
 import SaveCCMView from './SaveCCMView';
 import SaveTGDView from './SaveTGDView';
-import ListGeneralView from './ListGeneralView';
 import Login from './LoginView';
 import RegistrarUser from './RegistroView';
 import ListaUsuarios from './ListUserView';
 import EditarRegistroView from './EditarRegistroView';
+import ListTDview from './ListTDView';
+import ListCCMview from './ListCCMView';
+import ListTGDview from './ListTGDView';
+import EditarTD from './EditarTDview';
+import EditarCCM from './EditarCCMview';
+import EditarTGD from './EditarTGDview';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const ListTD = createStackNavigator();
+const ListTGD = createStackNavigator();
+const ListCCM = createStackNavigator();
 
 const ListaUsuariosStack = () => (
   <Stack.Navigator
@@ -34,6 +42,61 @@ const ListaUsuariosStack = () => (
   </Stack.Navigator>
 );
 
+
+const ListaTDStack = () => (
+  <ListTD.Navigator
+  options={{
+    headerShown : false,
+   }}
+  >
+    <ListTD.Screen name="ListaTD"
+     component={ListTDview} 
+     options={{
+      headerShown : false,
+     }}/>
+    <ListTD.Screen name="EditarRegistroTD" 
+    component={EditarTD} 
+    options={{
+      title : false,
+     }}/>
+  </ListTD.Navigator>
+);
+const ListaTGDStack = () => (
+  <ListTGD.Navigator
+  options={{
+    headerShown : false,
+   }}
+  >
+    <ListTGD.Screen name="ListaUser"
+     component={ListTGDview} 
+     options={{
+      headerShown : false,
+     }}/>
+    <ListTGD.Screen name="EditarRegistroTGD" 
+    component={EditarTGD} 
+    options={{
+      title : false,
+     }}/>
+  </ListTGD.Navigator>
+);
+const ListaCCMStack = () => (
+  <ListCCM.Navigator
+  options={{
+    headerShown : false,
+   }}
+  >
+    <ListCCM.Screen name="ListaUser"
+     component={ListCCMview} 
+     options={{
+      headerShown : false,
+     }}/>
+    <ListCCM.Screen name="EditarRegistroCCM" 
+    component={EditarCCM} 
+    options={{
+      title : false,
+     }}/>
+  </ListCCM.Navigator>
+);
 
 const TabNavigator = () => (
   <Tab.Navigator
@@ -98,10 +161,32 @@ const TabNavigator = () => (
         headerShown :false,
     }}/>
     <Tab.Screen 
-    name="ListRegistros" 
-    component={ListGeneralView} 
+    name="ListRegistrosTD" 
+    component={ListaTDStack} 
     options={{
-      tabBarLabel: 'Registros',
+      tabBarLabel: 'TD',
+      tabBarIcon: ({ color, size }) => {
+        return (
+          <MaterialCommunityIcons name="clipboard-list" size={24} color="black" />
+        )},
+        headerShown :false,
+    }}/>
+    <Tab.Screen 
+    name="ListRegistrosTGD" 
+    component={ListaTGDStack} 
+    options={{
+      tabBarLabel: 'TGD',
+      tabBarIcon: ({ color, size }) => {
+        return (
+          <MaterialCommunityIcons name="clipboard-list" size={24} color="black" />
+        )},
+        headerShown :false,
+    }}/>
+    <Tab.Screen 
+    name="ListRegistrosCCM" 
+    component={ListaCCMStack} 
+    options={{
+      tabBarLabel: 'CCM',
       tabBarIcon: ({ color, size }) => {
         return (
           <MaterialCommunityIcons name="clipboard-list" size={24} color="black" />

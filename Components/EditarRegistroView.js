@@ -37,7 +37,18 @@ const EditarUsuario = ({ route, navigation }) => {
             }
             setLoading(true);
             try {
-                const infoUsuario = await updateUser(id, newName, newLastName, newLastName2, newUsername, newPassword, newRol);
+
+                const userData = {
+                    id: id,
+                    Name: newName,
+                    LastName: newLastName,
+                    LastName2: newLastName2,
+                    Username: newUsername,
+                    Password: newPassword,
+                    Rol: newRol
+                };
+                const infoUsuario = await updateUser(userData);
+
                 if (infoUsuario.success) {
                     Alert.alert("Actualización exitosa", "Se ha actualizado el usuario correctamente");
                     navigation.goBack();
