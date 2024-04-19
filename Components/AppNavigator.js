@@ -4,16 +4,14 @@ import Menu from './Menu';
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => (
+const AppNavigator = ({ userRole }) => (
   <Stack.Navigator>
     <Stack.Screen 
-    name="Menu" 
-    component={Menu}
-    options={{
-      headerShown : false,
-      cardStyle : {paddingTop : 50, paddingHorizontal : 15}
-     }}
-    />
+      name="Menu" 
+      options={{ headerShown: false }}
+    >
+      {props => <Menu {...props} userRole={userRole} />}
+    </Stack.Screen>
   </Stack.Navigator>
 );
 

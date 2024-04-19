@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Modal, ActivityIndicator, Alert } from "react-native";
 import { registerUser } from '../Services/ServiceUsers';
-import { validatePassword } from '../Filters/validatePassword'
+import { validatePassword } from '../Filters/validatePassword';
 import { styles } from '../Styles/RegistroStyles';
 
-const Registro = () => {
+const Registro = ({ route  }) => {
+    const { userRole } = route.params;
     const [name, setname] = useState("");
     const [lastName, setlastName] = useState("");
     const [lastName2, setlastName2] = useState("");
@@ -19,7 +20,7 @@ const Registro = () => {
         if (username && password && rol) {
             var  validPassword = validatePassword(password);
             // Validar la contraseña
-            if (validPassword.score<=2) {
+            if (validPassword.score <= 2) {
                 console.log(password);
                 Alert.alert("Contraseña no válida", "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula, una letra minúscula, un número y un caracter especial(@,#...) .");
                 return;
@@ -29,7 +30,7 @@ const Registro = () => {
             try {
                 const infoUsuario = await registerUser(name, lastName, lastName2, username, password, rol);
                 if (infoUsuario.success) {
-                    Alert.alert("Registro exitoso", "Se a registrado el usuario correctamente");
+                    Alert.alert("Registro exitoso", "Se ha registrado el usuario correctamente");
 
                     setShowModal(false);
                     setname("");
@@ -87,12 +88,24 @@ const Registro = () => {
                 onChangeText={(text) => setPassword(text)}
                 secureTextEntry
             />
-            <TouchableOpacity
-                style={styles.input}
-                onPress={() => setShowModal(true)}
-            >
-                <Text>{rol ? rol : "Selecciona un rol"}</Text>
-            </TouchableOpacity>
+            {/* Si el usuario es administrador, puede seleccionar cualquier rol */}
+            {userRole === 'Administrador' && (
+                <TouchableOpacity
+                    style={styles.input}
+                    onPress={() => setShowModal(true)}
+                >
+                    <Text>{rol ? rol : "Selecciona un rol"}</Text>
+                </TouchableOpacity>
+            )}
+            {/* Si el usuario es editor, solo puede seleccionar el rol General */}
+            {userRole === 'Editor' && (
+                 <TouchableOpacity
+                 style={[styles.input, rol === 'General' && styles.selectedRol]}
+                 onPress={() => setRol("General")}
+             >
+                 <Text>{rol ? rol : "General"}</Text>
+             </TouchableOpacity>    
+            )}
             {loading ? (
                 <ActivityIndicator size="large" color="#0000ff" />
             ) : (
@@ -103,7 +116,6 @@ const Registro = () => {
                     <Text style={styles.buttonText}>Registrar</Text>
                 </TouchableOpacity>
             )}
-            
 
             <Modal
                 visible={showModal}
@@ -111,15 +123,16 @@ const Registro = () => {
                 animationType="slide"
             >
                 <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}><TouchableOpacity
-                        style={styles.option}
-                        onPress={() => {
-                            setRol("Administrador");
-                            setShowModal(false);
-                        }}
-                    >
-                        <Text>Administrador</Text>
-                    </TouchableOpacity>
+                    <View style={styles.modalContent}>
+                        <TouchableOpacity
+                            style={styles.option}
+                            onPress={() => {
+                                setRol("Administrador");
+                                setShowModal(false);
+                            }}
+                        >
+                            <Text>Administrador</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.option}
                             onPress={() => {
