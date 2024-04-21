@@ -14,7 +14,7 @@ bcrypt.setRandomFallback((len) => {
   return buf.map(() => Math.floor(isaac.random() * 256));
 });
 
-export const registerUser = async (name, lastName, lastName2, username, password, rol) => {
+export const registerUser = async (name, lastName, lastName2, username, password, rol, userName) => {
 
   try {
 
@@ -27,14 +27,13 @@ export const registerUser = async (name, lastName, lastName2, username, password
     const docuRef = collection(db, "usuarios");
     await addDoc(docuRef, {
       Name: name, LastName: lastName, LastName2: lastName2,
-      Username: username, Password: hashedPassword, Rol: rol
+      Username: username, Password: hashedPassword, Rol: rol, creatorUser: userName
     });
     return { success: true };
   } catch (error) {
     throw new Error("Error al registrar el usuario");
   }
 };
-
 
 export const updateUser = async (userData) => {
   try {
@@ -62,6 +61,8 @@ export const updateUser = async (userData) => {
       Username: userData.Username,
       Password: hashedPassword,
       Rol: userData.Rol,
+      creatorUser : userData.creatorUser,
+      userWhoEdited: userData.userWhoEdited,
     });
 
     return { success: true };
@@ -107,9 +108,8 @@ export const loginUser = async (username, password) => {
     if (!passwordMatch) {
       return { success: false, message: "Contraseña incorrecta" };
     }
-
     // Si la contraseña coincide, devolver éxito y los datos del usuario
-    return { success: true, userRole: userDoc.Rol };
+    return { success: true, userRole: userDoc.Rol, userName: userDoc.Username };
   } catch (error) {
     throw new Error("Error al iniciar sesión");
   }

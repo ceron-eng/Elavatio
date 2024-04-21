@@ -10,7 +10,7 @@ export const exportToExcelCCM = async (doc) => {
     ['NOMBRE DEL TABLERO', 'ID DEL TABLERO',
       'CMM', 'AREA CMM', 'TD', 'AREA TD',
       'PROTECCIÓN', 'INTERRUPTOR', 'TENSIÓN NOMINAL', 'CORRIENTE NOMINAL', 'ICC',
-      'NO. POLOS', 'FUSIBLES'],
+      'NO. POLOS', 'FUSIBLES','Usuario Creador'],
     [
       doc.nameTablero,
       doc.idCMMTab,
@@ -25,7 +25,7 @@ export const exportToExcelCCM = async (doc) => {
       doc.ICC[0].ICC1 + ' / ' + doc.ICC[0].ICC2,
       doc.NoPolos[0].noPol1 + ' / ' + doc.NoPolos[0].noPol2,
       doc.Fusibles[0].fusi1 + ' / ' + doc.Fusibles[0].fusi2],
-
+      doc.creatorUser,
   ];
 
   const ws = XLSX.utils.aoa_to_sheet(data);
@@ -66,7 +66,7 @@ export const exportToExcelTD = async (doc) => {
       'NO. CABLES NEUTROS', 'CALIBRE CABLES NEUTROS', 'MAT CABLES NEUTROS',
       'NO. CABLES TIERRA', 'CALIBRE CABLES TIERRA', 'MAT CABLES TIERRA', 'Canalizacion y medida',
       'LONGUITUD(m)', 'PROTECCIÓN LADO TABLERO', 'MARCA Y MODELO TABLERO', 'TENCIÓN NOMINAL TABLERO (VOLTS)',
-      'CORRIENTE NOMINAL (AMPERES)', 'ICC TABLERO (KA)', 'NO. POLOS TABLERO(K)'],
+      'CORRIENTE NOMINAL (AMPERES)', 'ICC TABLERO (KA)', 'NO. POLOS TABLERO(K)','Usuario Creador'],
     [
       doc.name,
       doc.nameTablero,
@@ -93,7 +93,8 @@ export const exportToExcelTD = async (doc) => {
       doc.tenNomTab,
       doc.corrNomTab,
       doc.ICCTab,
-      doc.noPolTab
+      doc.noPolTab,
+      doc.creatorUser,
     ],
     ['BARRAS NEUTROS', doc.barrasNeutros],
     ['PUENTE DE UNIÓN', doc.puenteUnion],
@@ -135,7 +136,7 @@ export const exportToExcelTGD = async (doc) => {
       'INOM', 'NO. POLOS2', 'MARCA Y TIPO DE TRANSFORMADOR', 'KVA', 'TENSIÓN DIVISOR (VOLTS)',
       'TENSIÓN COCIENTE (VOLTS)', 'CONEXIÓN', '% Z', 'NO. CABLES FASES', 'CALIBRE CABLES FASES',
       'MAT CABLES FASES', 'NO. CABLES NEUTROS', 'CALIBRE CABLES NEUTROS', 'MAT CABLES NEUTROS',
-      'NO. CABLES TIERRA', 'CALIBRE CABLES TIERRA', 'MAT CABLES TIERRA', 'Canalizacion y medida','LONGITUD (m)', 'FECHA'],
+      'NO. CABLES TIERRA', 'CALIBRE CABLES TIERRA', 'MAT CABLES TIERRA', 'Canalizacion y medida','LONGITUD (m)', 'FECHA','Usuario Creador'],
     [
       doc.name,
       doc.idTGDTab,
@@ -163,7 +164,8 @@ export const exportToExcelTGD = async (doc) => {
       doc.Tierras[0].matCabTie,
       doc.canYmed,
       doc.long,
-      doc.date
+      doc.date,
+      doc.creatorUser,
     ],
     ['BARRAS NEUTROS', doc.barrasNeutros],
     ['PUENTE DE UNIÓN', doc.puenteUnion],

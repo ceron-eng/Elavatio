@@ -104,7 +104,6 @@ const ListGeneralView = ({ navigation }) => {
                                 size={24}
                                 color="black"
                                 onPress={() => {
-                                    console.log(item);
                                     navigation.navigate('EditarRegistroTD', { user: item });
                                 }}
                             />

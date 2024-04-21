@@ -53,9 +53,11 @@ const SaveCCMView = ({ route, navigation }) => {
         setLoading,
         handleSubmit,
     } = useCCMModel();
-    const { user } = route.params;
+    const { user,userName } = route.params;
     const [id] = useState(user.idDoc);
-
+    const [creatorUser] = useState(user.creatorUser);
+    const userWhoEdited = userName.route.params.userName;
+    console.log(userWhoEdited);
     useEffect(() => {
         setNameTablero(user.nameTablero);
         setIdCMMTab(user.idCMMTab);
@@ -108,7 +110,9 @@ const SaveCCMView = ({ route, navigation }) => {
                 noPol1,
                 noPol2,
                 fusi1,
-                fusi2
+                fusi2,
+                creatorUser,
+                userWhoEdited
             };
 
             const confirm = await updateCCM(CCMData);

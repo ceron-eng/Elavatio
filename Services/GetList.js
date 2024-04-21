@@ -53,7 +53,12 @@ export const getListCCM = async () => {
                         fusi2: doc.data().Fusibles[0].fusi2,
                     }],
                 date: doc.data().date,
+                creatorUser: doc.data().creatorUser
             });
+            // Verificar si existe el campo userWhoEdited
+            if (doc.data().userWhoEdited) {
+                userWhoEdited = doc.data().userWhoEdited;
+            }
         });
         return usersList;
     } catch (error) {
@@ -102,7 +107,7 @@ export const getListTD = async () => {
                         calCabTie: doc.data().Tierras[0].calCabTie,
                         matCabTie: doc.data().Tierras[0].matCabTie,
                     }],
-                canYmed : doc.data().canYmed,
+                canYmed: doc.data().canYmed,
                 long: doc.data().long,
                 protectionTab: doc.data().protectionTab ? "Si" : "No",
                 marYModTab: doc.data().marYModTab,
@@ -114,7 +119,11 @@ export const getListTD = async () => {
                 barrasNeutros: doc.data().barrasNeutros ? "Si" : "No",
                 puenteUnion: doc.data().puenteUnion ? "Si" : "No",
                 barraTierra: doc.data().barraTierra ? "Si" : "No",
+                creatorUser: doc.data().creatorUser
             });
+            if (doc.data().userWhoEdited) {
+                userWhoEdited = doc.data().userWhoEdited;
+            }
         });
         return (usersList);
     } catch (error) {
@@ -169,15 +178,19 @@ export const getListTGD = async () => {
                         matCabTie: doc.data().Tierras[0].matCabTie,
                     }
                 ],
-                canYmed : doc.data().canYmed,
+                canYmed: doc.data().canYmed,
                 long: doc.data().long,
                 protectionTab: doc.data().protectionTab ? "Si" : "No",
                 cargas: doc.data().cargas,
                 barrasNeutros: doc.data().barrasNeutros ? "Si" : "No",
                 puenteUnion: doc.data().puenteUnion ? "Si" : "No",
                 barraTierra: doc.data().barraTierra ? "Si" : "No",
-                date: doc.data().date
+                date: doc.data().date,
+                creatorUser: doc.data().creatorUser
             });
+            if (doc.data().userWhoEdited) {
+                userWhoEdited = doc.data().userWhoEdited;
+            }
         });
         return tgdList;
     } catch (error) {

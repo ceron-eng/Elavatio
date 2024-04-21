@@ -4,8 +4,9 @@ import { registerUser } from '../Services/ServiceUsers';
 import { validatePassword } from '../Filters/validatePassword';
 import { styles } from '../Styles/RegistroStyles';
 
-const Registro = ({ route  }) => {
-    const { userRole } = route.params;
+const Registro = ({ route }) => {
+
+    const { userRole, userName } = route.params;
     const [name, setname] = useState("");
     const [lastName, setlastName] = useState("");
     const [lastName2, setlastName2] = useState("");
@@ -15,10 +16,9 @@ const Registro = ({ route  }) => {
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
     async function registrarUsuario() {
         if (username && password && rol) {
-            var  validPassword = validatePassword(password);
+            var validPassword = validatePassword(password);
             // Validar la contraseña
             if (validPassword.score <= 2) {
                 console.log(password);
@@ -28,7 +28,8 @@ const Registro = ({ route  }) => {
 
             setLoading(true);
             try {
-                const infoUsuario = await registerUser(name, lastName, lastName2, username, password, rol);
+
+                const infoUsuario = await registerUser(name, lastName, lastName2, username, password, rol, userName);
                 if (infoUsuario.success) {
                     Alert.alert("Registro exitoso", "Se ha registrado el usuario correctamente");
 
@@ -99,12 +100,12 @@ const Registro = ({ route  }) => {
             )}
             {/* Si el usuario es editor, solo puede seleccionar el rol General */}
             {userRole === 'Editor' && (
-                 <TouchableOpacity
-                 style={[styles.input, rol === 'General' && styles.selectedRol]}
-                 onPress={() => setRol("General")}
-             >
-                 <Text>{rol ? rol : "General"}</Text>
-             </TouchableOpacity>    
+                <TouchableOpacity
+                    style={[styles.input, rol === 'General' && styles.selectedRol]}
+                    onPress={() => setRol("General")}
+                >
+                    <Text>{rol ? rol : "General"}</Text>
+                </TouchableOpacity>
             )}
             {loading ? (
                 <ActivityIndicator size="large" color="#0000ff" />

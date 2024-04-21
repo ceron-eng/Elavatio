@@ -1,19 +1,23 @@
 import React from 'react';
-import { View,
-   ActivityIndicator, 
-   TouchableOpacity, 
-   TextInput, 
-   Text, 
-   Button, 
-   ScrollView, 
-   Dimensions,
-   FlatList,
-  Alert } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  TextInput,
+  Text,
+  Button,
+  ScrollView,
+  Dimensions,
+  FlatList,
+  Alert
+} from 'react-native';
 import { format } from 'date-fns';
 import { styles } from '../Styles/SaveTDViewStyles'
 import { useTGDModel } from '../ModelsViews/ModelViewAll' // Importar el modelo
 
-const SaveTGDView = () => {
+const SaveTGDView = ({ route }) => {
+  const { userName } = route.params;
+  console.log(userName);
   const {
     nameTablero,
     setNameTablero,
@@ -558,7 +562,7 @@ const SaveTGDView = () => {
             if (cargas.length === 0) {
               Alert.alert('Error', 'Debes agregar al menos una carga antes de guardar el registro.');
             } else {
-              handleSubmit();
+              handleSubmit(userName);
             }
           }
           }

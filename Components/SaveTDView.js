@@ -6,10 +6,10 @@ import { format } from 'date-fns';
 import { styles } from '../Styles/SaveTDViewStyles'
 import Pagination from '../Filters/Paginacion';
 import { useTDModel } from '../ModelsViews/ModelViewAll' // Importar el modelo
-
 const ITEMS_PER_PAGE = 2;
 
-const SaveTDView = () => {
+const SaveTDView  = ({ route  }) => {
+  const { userName } = route.params;
   const {
     name,
     setName,
@@ -98,7 +98,6 @@ const SaveTDView = () => {
     cargas,
     setCargas,
   } = useTDModel();
-
   const [currentPage, setCurrentPage] = useState(0);
 
   const startIndex = currentPage * ITEMS_PER_PAGE;
@@ -116,6 +115,18 @@ const SaveTDView = () => {
     const nuevasCargas = [...cargas];
     nuevasCargas[index][campo] = text;
     setCargas(nuevasCargas);
+  };
+
+
+
+  const handleSaveAndRedirect = () => {
+    if (cargas.length === 0) {
+      Alert.alert('Error', 'Debes agregar al menos una carga antes de guardar el registro.');
+    } else {
+      // Ejecuta la función de guardado
+      handleSubmit(userName);
+      
+    }
   };
 
   const windowWidth = Dimensions.get('window').width;
@@ -569,13 +580,7 @@ const SaveTDView = () => {
       ) : (
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            if (cargas.length === 0) {
-              Alert.alert('Error', 'Debes agregar al menos una carga antes de guardar el registro.');
-            } else {
-              handleSubmit();
-            }
-          }}
+          onPress={handleSaveAndRedirect}
         >
           <Text style={styles.buttonText}>Guardar</Text>
         </TouchableOpacity>

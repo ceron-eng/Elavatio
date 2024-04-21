@@ -6,7 +6,8 @@ import { Text, View, TextInput, TouchableOpacity, Modal, ActivityIndicator, Aler
 import { styles } from '../Styles/RegistroStyles';
 
 const EditarUsuario = ({ route, navigation }) => {
-    const { user } = route.params;
+   
+    const { user,userName } = route.params;
     const isFocused = useIsFocused();
     const [id] = useState(user.id);
     const [newName, setNewName] = useState(user.Name);
@@ -16,10 +17,12 @@ const EditarUsuario = ({ route, navigation }) => {
     const [newPassword, setNewPassword] = useState(null);
     const [newPasswordC, setNewPasswordC] = useState(null);
     const [newRol, setNewRol] = useState(user.Rol);
+    const [creatorUser] = useState(user.creatorUser);
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
+    const userWhoEdited = userName.route.params.userName;
+    console.log(userWhoEdited);
 
 
     async function actualizarUsuario() {
@@ -45,7 +48,9 @@ const EditarUsuario = ({ route, navigation }) => {
                     LastName2: newLastName2,
                     Username: newUsername,
                     Password: newPassword,
-                    Rol: newRol
+                    Rol: newRol,
+                    creatorUser: creatorUser,
+                    userWhoEdited: userWhoEdited
                 };
                 const infoUsuario = await updateUser(userData);
 

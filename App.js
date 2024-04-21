@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Button  } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
-import AppNavigator from "./Components/AppNavigator";
+import Menu from "./Components/Menu";
 import { loginUser } from "./Services/ServiceUsers";
 import LoginScreen from "./Components/LoginView";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState(null); 
+  const [userRole, setUserRole] = useState(null);
+  const [username, setUserName] = useState(null);
 
   const handleLogin = async (username, password) => {
     try {
@@ -16,6 +17,8 @@ const App = () => {
         // Si el inicio de sesión es exitoso, establece el estado de isLoggedIn en true
         setIsLoggedIn(true);
         setUserRole(result.userRole);
+        setUserName(username);
+       
       } else {
         // Si el inicio de sesión falla, muestra un mensaje de error o maneja la lógica según sea necesario
         console.error(result.message);
@@ -27,13 +30,15 @@ const App = () => {
   };
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserRole("");
+    setUserName("");
   };
   return (
     <NavigationContainer>
       <View style={styles.container}>
         {isLoggedIn ? (
           <>
-            <AppNavigator userRole={userRole} /> 
+            <Menu userName={username} userRole = {userRole} />
             <Button title="Cerrar sesión" onPress={handleLogout} />
           </>
         )

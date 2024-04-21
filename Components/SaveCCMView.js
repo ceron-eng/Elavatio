@@ -1,8 +1,9 @@
-import { View, TextInput, Text, ActivityIndicator,TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { View, TextInput, Text, ActivityIndicator, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { format } from 'date-fns';
 import { useCCMModel } from '../ModelsViews/ModelViewAll'
 import { styles } from '../Styles/SaveTDViewStyles';
-const SaveCCMView = () => {
+const SaveCCMView = ({ route }) => {
+    const { userName } = route.params;
     const {
         nameTablero,
         setNameTablero,
@@ -50,10 +51,11 @@ const SaveCCMView = () => {
         setLoading,
         handleSubmit,
     } = useCCMModel();
-
     const windowWidth = Dimensions.get('window').width;
-
-
+    // Función para guardar los datos y redirigir al home
+    const handleSaveAndRedirect = () => {
+        handleSubmit(userName);
+    };
     return (
         <ScrollView style={[styles.text, { width: windowWidth - 40 }]}>
             <Text style={styles.label}>Informacion General</Text>
@@ -135,13 +137,13 @@ const SaveCCMView = () => {
                     <Text style={styles.tableHeader}>TENSIÓN NOMINAL</Text>
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={tens1}
                         onChangeText={setTens1}
                     />
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={tens2}
                         onChangeText={setTens2}
                     />
@@ -150,13 +152,13 @@ const SaveCCMView = () => {
                     <Text style={styles.tableHeader}>CORRIENTE NOMINAL</Text>
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={corr1}
                         onChangeText={setCorr1}
                     />
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={corr2}
                         onChangeText={setCorr2}
                     />
@@ -165,13 +167,13 @@ const SaveCCMView = () => {
                     <Text style={styles.tableHeader}>ICC</Text>
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={ICC1}
                         onChangeText={setICC1}
                     />
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={ICC2}
                         onChangeText={setICC2}
                     />
@@ -180,13 +182,13 @@ const SaveCCMView = () => {
                     <Text style={styles.tableHeader}>No. POLOS</Text>
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={noPol1}
                         onChangeText={setNoPol1}
                     />
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={noPol2}
                         onChangeText={setNoPol2}
                     />
@@ -195,13 +197,13 @@ const SaveCCMView = () => {
                     <Text style={styles.tableHeader}>Fusibles</Text>
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={fusi1}
                         onChangeText={setFusi1}
                     />
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
-                        keyboardType="numeric" 
+                        keyboardType="numeric"
                         value={fusi2}
                         onChangeText={setFusi2}
                     />
@@ -216,7 +218,7 @@ const SaveCCMView = () => {
             ) : (
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={handleSubmit}
+                    onPress={handleSaveAndRedirect}
                 >
                     <Text style={styles.buttonText}>Guardar</Text>
                 </TouchableOpacity>

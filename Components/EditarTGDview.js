@@ -125,8 +125,11 @@ const EditTGDView = ({ route, navigation }) => {
     const handlePrevPage = () => {
         setCurrentPage(currentPage - 1);
     };
-    const { item } = route.params;
+    const { item, userName } = route.params;
     const [id] = useState(item.idDoc);
+    const [creatorUser] = useState(item.creatorUser);
+    const userWhoEdited = userName.route.params.userName;
+
     useEffect(() => {
         setNameTablero(item.nameTablero);
         setName(item.name);
@@ -217,11 +220,13 @@ const EditTGDView = ({ route, navigation }) => {
                 puenteUnion,
                 barraTierra,
                 cargas,
-                date
+                date,
+                creatorUser,
+                userWhoEdited
             };
 
 
-            
+
             const confirm = await updateTGD(TGDData);
 
             if (confirm.success) {

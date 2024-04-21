@@ -111,15 +111,18 @@ const EditTDView = ({ route, navigation }) => {
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
   };
-  const { user } = route.params;
+  const { user, userName } = route.params;
   const [id] = useState(user.idDoc);
-
+  const [creatorUser] = useState(user.creatorUser);
+  const userWhoEdited = userName.route.params.userName;
+  
   const editarCarga = (text, campo, index) => {
     const nuevasCargas = [...cargas];
     nuevasCargas[index][campo] = text;
     setCargas(nuevasCargas);
   };
 
+  
   useEffect(() => {
     setName(user.name);
     setNameTablero(user.nameTablero);
@@ -148,9 +151,9 @@ const EditTDView = ({ route, navigation }) => {
     setICCTab(user.ICCTab);
     setNoPolTab(user.noPolTab);
     setFormaRegistro(user.formaRegistro);
-    setBarrasNeutros(item.barrasNeutros === 'Si' ? true : false);
-    setPuenteUnion(item.puenteUnion === 'Si' ? true : false);
-    setBarraTierra(item.barraTierra === 'Si' ? true : false);
+    setBarrasNeutros(user.barrasNeutros === 'Si' ? true : false);
+    setPuenteUnion(user.puenteUnion === 'Si' ? true : false);
+    setBarraTierra(user.barraTierra === 'Si' ? true : false);
     const cargaData = user.cargas.map(carga => ({
       nombreCar: carga.nombreCar,
       icc: carga.icc,
@@ -239,7 +242,9 @@ const EditTDView = ({ route, navigation }) => {
         puenteUnion,
         barrasNeutros,
         cargas,
-        date
+        date,
+        creatorUser,
+        userWhoEdited
       };
 
       const confirm = await updateTD(TDData);

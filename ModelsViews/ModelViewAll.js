@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { saveTD, saveCCM, saveTGD } from '../Services/ServicesSave';
+import { useNavigation } from '@react-navigation/native';
 
 export const useTDModel = () => {
   const [name, setName] = useState('');
@@ -47,8 +48,9 @@ export const useTDModel = () => {
   const [val1, setVal1] = useState('');
   const [val2, setVal2] = useState('');
 
+  const navigation = useNavigation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (userName) =>  {
     setLoading(true);
     try {
 
@@ -76,8 +78,8 @@ export const useTDModel = () => {
         tenNomTab.trim() === '' ||
         corrNomTab.trim() === '' ||
         ICCTab.trim() === '' ||
-        noPolTab.trim() === '' 
-        
+        noPolTab.trim() === '' ||
+        userName.trim() === ''
       ) {
         alert('Por favor completa todos los campos.');
         setLoading(false);
@@ -124,12 +126,16 @@ export const useTDModel = () => {
         puenteUnion,
         barraTierra,
         date: date ? date.toISOString().substring(0, 10).replace('T', '-') : '',
+        creatorUser : userName,
       });
 
       if (success) {
         resetFormTD(); // Resetear el formulario después de enviar los datos
+        setLoading(false);
         alert('Registro-TD guardado exitosamente!');
+        navigation.navigate('Home'); 
       } else {
+        setLoading(false);
         alert('Ocurrió un error al guardar el Registro-TD. Por favor, inténtalo de nuevo.');
       }
     } catch (error) {
@@ -306,7 +312,8 @@ export const useCCMModel = () => {
   const [fusi2, setFusi2] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const navigation = useNavigation();
+  const handleSubmit = async (userName) =>  {
     try {
 
       if (!nameTablero || !idCMMTab || !CMM || !areaCMM || !TD ||
@@ -317,8 +324,6 @@ export const useCCMModel = () => {
         setLoading(false);
         return;
       }
-
-
       setLoading(true);
       const success = await saveCCM({
         nameTablero,
@@ -363,18 +368,20 @@ export const useCCMModel = () => {
             fusi2,
           }],
         date: date ? date.toISOString().substring(0, 10).replace('T', '-') : '',
+        creatorUser : userName,
       });
 
       if (success) {
         resetFormCCM();
         setLoading(false);
         alert('Registro-CMM guardado exitosamente!');
+        navigation.navigate('Home'); 
       } else {
         setLoading(false);
         alert('Ocurrió un error al guardar el Registro-CMM. Por favor, inténtalo de nuevo.');
       }
     } catch (error) {
-      setLoading(true);
+      setLoading(false);
       alert('Ocurrió un error al guardar el Registro-CMM. Por favor, inténtalo de nuevo.');
     }
   };
@@ -499,8 +506,9 @@ export const useTGDModel = () => {
   const [val1, setVal1] = useState('');
   const [val2, setVal2] = useState('');
 
+  const navigation = useNavigation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (userName) =>  {
     try {
       setLoading(true);
       if (!nameTablero || !name || !idTGDTab || !interruptor || !tension || !corrNom ||
@@ -553,11 +561,13 @@ export const useTGDModel = () => {
         puenteUnion,
         barraTierra,
         date: date ? date.toISOString().substring(0, 10).replace('T', '-') : '',
+        creatorUser : userName,
       });
 
       if (success) {
         resetFormTGD();
         alert('Registro-TGD guardado exitosamente!');
+        navigation.navigate('Home'); 
       } else {
         setLoading(false);
         alert('Ocurrió un error al guardar el Registro-TGD. Por favor, inténtalo de nuevo.');

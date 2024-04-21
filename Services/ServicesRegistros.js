@@ -85,7 +85,9 @@ export const updateTD = async (TDData) => {
       barrasNeutros: TDData.barrasNeutros,
       puenteUnion: TDData.puenteUnion,
       barraTierra: TDData.barraTierra,
+      creatorUser : TDData.creatorUser,
       UpdateDate: TDData.date ? TDData.date.toISOString().substring(0, 10).replace('T', '-') : '',
+      userWhoEdited: TDData.userWhoEdited,
     });
 
     return { success: true };
@@ -179,7 +181,9 @@ export const updateTGD = async (TGDData) => {
       barrasNeutros: TGDData.barrasNeutros,
       puenteUnion: TGDData.puenteUnion,
       barraTierra: TGDData.barraTierra,
+      creatorUser : TGDData.creatorUser,
       UpdateDate: TGDData.date ? TGDData.date.toISOString().substring(0, 10).replace('T', '-') : '',
+      userWhoEdited: TGDData.userWhoEdited,
     });
 
     return { success: true };
@@ -248,6 +252,8 @@ export const updateCCM = async (CCMData) =>{
           fusi2:CCMData.fusi2,
         }],
       Newdate: CCMData.date ? CCMData.date.toISOString().substring(0, 10).replace('T', '-') : '',
+      creatorUser : CCMData.creatorUser,
+      userWhoEdited: CCMData.userWhoEdited,
     });
 
     return { success: true };

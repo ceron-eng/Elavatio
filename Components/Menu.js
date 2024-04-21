@@ -23,8 +23,10 @@ const ListTD = createStackNavigator();
 const ListTGD = createStackNavigator();
 const ListCCM = createStackNavigator();
 
-const ListaUsuariosStack = () => (
-  <Stack.Navigator
+
+const ListaUsuariosStack = (userName) => {
+  return(
+    <Stack.Navigator
     options={{
       headerShown: false,
     }}
@@ -36,107 +38,174 @@ const ListaUsuariosStack = () => (
       }} />
     <Stack.Screen name="EditarRegistro"
       component={EditarRegistroView}
+      initialParams={{ userName: userName }}
       options={{
         title: false,
       }} />
   </Stack.Navigator>
-);
-
-
-const ListaTDStack = () => (
-  <ListTD.Navigator
-    options={{
-      headerShown: false,
-    }}
-  >
-    <ListTD.Screen name="ListaTD"
-      component={ListTDview}
+  );
+};
+const ListaTDStack = (userName) => {
+  return (
+    <ListTD.Navigator
       options={{
         headerShown: false,
-      }} />
-    <ListTD.Screen name="EditarRegistroTD"
-      component={EditarTD}
-      options={{
-        title: false,
-      }} />
-  </ListTD.Navigator>
-);
-const ListaTGDStack = () => (
-  <ListTGD.Navigator
-    options={{
-      headerShown: false,
-    }}
-  >
-    <ListTGD.Screen name="ListaUser"
-      component={ListTGDview}
-      options={{
-        headerShown: false,
-      }} />
-    <ListTGD.Screen name="EditarRegistroTGD"
-      component={EditarTGD}
-      options={{
-        title: false,
-      }} />
-  </ListTGD.Navigator>
-);
-const ListaCCMStack = () => (
-  <ListCCM.Navigator
-    options={{
-      headerShown: false,
-    }}
-  >
-    <ListCCM.Screen name="ListaUser"
-      component={ListCCMview}
-      options={{
-        headerShown: false,
-      }} />
-    <ListCCM.Screen name="EditarRegistroCCM"
-      component={EditarCCM}
-      options={{
-        title: false,
-      }} />
-  </ListCCM.Navigator>
-);
-
-const TabNavigator = ({ userRole }) => (
-  <Tab.Navigator
-    initialRouteName="Home" // Nombre de la pantalla inicial
-    screenOptions={{
-      tabBarActiveTintColor: 'purple',
-    }}
-  >
-    <Tab.Screen
-      name="Home" // Nombre de la pantalla
-      component={HomeScreen} // Componente asociado a esta pantalla
-      options={{
-        tabBarLabel: 'Home', // Texto que se mostrará en la pestaña
-        tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="home" size={size} color={color} />
-        ),
       }}
-    />
-    {(userRole === 'Administrador' || userRole === 'Editor') && (
-      <Tab.Screen
-        name="Registro"
-        component={RegistrarUser}
-        initialParams={{ userRole: userRole }} // Pasa userRole como parámetro inicial
+    >
+      <ListTD.Screen name="ListaTD"
+        component={ListTDview}
         options={{
-          tabBarLabel: 'Registro',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" size={24} color={color} />
-          ),
           headerShown: false,
-        }}
-      />
-    )}
+        }} />
+      <ListTD.Screen name="EditarRegistroTD"
+        component={EditarTD}
+        initialParams={{ userName: userName }}
+        options={{
+          title: false,
+        }} />
+    </ListTD.Navigator>
+  );
+};
+const ListaTGDStack = (userName) => {
+  return (
+    <ListTGD.Navigator
+      options={{
+        headerShown: false,
+      }}
+    >
+      <ListTGD.Screen name="ListaUser"
+        component={ListTGDview}
+        options={{
+          headerShown: false,
+        }} />
+      <ListTGD.Screen name="EditarRegistroTGD"
+        component={EditarTGD}
+        initialParams={{ userName: userName }}
+        options={{
+          title: false,
+        }} />
+    </ListTGD.Navigator>);
 
-    {(userRole === 'Administrador' || userRole === 'Editor' || userRole === 'General') && (
-      <>
+};
+const ListaCCMStack = (userName) => {
+  return (
+    <ListCCM.Navigator
+      options={{
+        headerShown: false,
+      }}
+    >
+      <ListCCM.Screen name="ListaUser"
+        component={ListCCMview}
+        options={{
+          headerShown: false,
+        }} />
+      <ListCCM.Screen name="EditarRegistroCCM"
+        component={EditarCCM}
+        initialParams={{ userName: userName }}
+        options={{
+          title: false,
+        }} />
+    </ListCCM.Navigator>
+  );
+};
+
+const TabNavigator = ({ userName, userRole }) => {
+  console.log(userName, userRole);
+
+  const showRegistrationTab = () => {
+    // Si el rol del usuario es 'admin', se muestra la pestaña de registro
+    if (userRole === 'Administrador' || userRole === 'Editor') {
+      return (
+        <>
+          <Tab.Screen
+            name="Registro"
+            component={RegistrarUser}
+            initialParams={{ userRole: userRole, userName: userName }}
+            options={{
+              tabBarLabel: 'Registro',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="account" size={24} color={color} />
+              ),
+              headerShown: false,
+            }} />
+          <Tab.Screen
+            name="ListRegistrosTD"
+            component={ListaTDStack}
+            initialParams={{ userName: userName }}
+            options={{
+              tabBarLabel: 'TD',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
+              ),
+              headerShown: false,
+            }} />
+          <Tab.Screen
+            name="ListRegistrosTGD"
+            component={ListaTGDStack}
+            initialParams={{ userName: userName }}
+            options={{
+              tabBarLabel: 'TGD',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
+              ),
+              headerShown: false,
+            }} />
+          <Tab.Screen
+            name="ListRegistrosCCM"
+            component={ListaCCMStack}
+            initialParams={{ userName: userName }}
+            options={{
+              tabBarLabel: 'CCM',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
+              ),
+              headerShown: false,
+            }} />
+          <Tab.Screen
+            name="ListUsuarios"
+            component={ListaUsuariosStack}
+            initialParams={{ userName: userName }}
+            options={{
+              tabBarLabel: 'Usuarios',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
+              ),
+              headerShown: false,
+            }} />
+        </>
+
+
+      );
+    } else if (userRole === 'Administrador' || userRole === 'Editor' || userRole === 'General') {
+
+    }
+    // Si el rol del usuario no es 'admin', no se muestra la pestaña de registro
+    return null;
+  };
+  if (userName != null && userName != "" && userRole != null) {
+    return (
+      <Tab.Navigator
+        initialRouteName="Home" // Nombre de la pantalla inicial
+        screenOptions={{
+          tabBarActiveTintColor: 'purple',
+        }}
+      >
+        <Tab.Screen
+          name="Home" // Nombre de la pantalla
+          component={HomeScreen} // Componente asociado a esta pantalla
+          options={{
+            tabBarLabel: 'Home', // Texto que se mostrará en la pestaña
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" size={size} color={color} />
+            ),
+          }}
+        />
         <Tab.Screen
           name="SaveTD"
+          initialParams={{ userName: userName }}
           component={SaveTDView}
           options={{
-            tabBarLabel: 'Guardar TD',
+            tabBarLabel: 'TD',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="content-save" size={24} color={color} />
             ),
@@ -145,9 +214,10 @@ const TabNavigator = ({ userRole }) => (
         />
         <Tab.Screen
           name="SaveCCM"
+          initialParams={{ userName: userName }}
           component={SaveCCMView}
           options={{
-            tabBarLabel: 'Guardar CCM',
+            tabBarLabel: 'CCM',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="content-save" size={24} color={color} />
             ),
@@ -156,73 +226,23 @@ const TabNavigator = ({ userRole }) => (
         />
         <Tab.Screen
           name="SaveTGD"
+          initialParams={{ userName: userName }}
           component={SaveTGDView}
           options={{
-            tabBarLabel: 'Guardar TGD',
+            tabBarLabel: 'TGD',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="content-save" size={24} color={color} />
             ),
             headerShown: false,
           }}
         />
-      </>
-    )}
-
-    {(userRole === 'Administrador' || userRole === 'Editor') && (
-      <>
-        <Tab.Screen
-          name="ListRegistrosTD"
-          component={ListaTDStack}
-          options={{
-            tabBarLabel: 'TD',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="ListRegistrosTGD"
-          component={ListaTGDStack}
-          options={{
-            tabBarLabel: 'TGD',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        <Tab.Screen
-          name="ListRegistrosCCM"
-          component={ListaCCMStack}
-          options={{
-            tabBarLabel: 'CCM',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
-            ),
-            headerShown: false,
-          }}
-        />
-        {(userRole === 'Administrador' || userRole === 'Editor') && (
-          <Tab.Screen
-            name="ListUsuarios"
-            component={ListaUsuariosStack}
-            options={{
-              tabBarLabel: 'Usuarios',
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name="clipboard-list" size={24} color={color} />
-              ),
-              headerShown: false,
-            }}
-          />
-        )}
-      </>
-    )}
-  </Tab.Navigator>
-);
-
-
-
+        {showRegistrationTab()}
+      </Tab.Navigator>
+    );
+  } else {
+    return null;
+  }
+}
 
 
 export default TabNavigator;
