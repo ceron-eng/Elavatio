@@ -64,7 +64,7 @@ const SaveCCMView = ({ route, navigation }) => {
         setCMM(user.CMM);
         setAreCMM(user.areaCMM);
         setTD(user.TD);
-        setAreTD(user.areaCMM);
+        setAreTD(user.areTD);
         setProt1(user.Proteccion[0].prot1);
         setProt2(user.Proteccion[0].prot2);
         setinte1(user.Interruptor[0].inte1);

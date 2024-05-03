@@ -16,6 +16,7 @@ export const getListCCM = async () => {
                 CMM: doc.data().CMM,
                 areaCMM: doc.data().areaCMM,
                 TD: doc.data().TD,
+                areTD: doc.data().areTD,
                 /*Tabla de datos generales */
                 Proteccion: [
                     {

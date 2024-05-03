@@ -19,6 +19,7 @@
     "@zxcvbn-ts/language-en": "^3.0.2",
     "bcrypt": "^5.1.1",
     "date-fns": "^3.6.0",
+    "exceljs": "^4.4.0",
     "expo": "^50.0.14",
     "expo-sharing": "~11.10.0",
     "expo-status-bar": "~1.11.1",
@@ -32,7 +33,7 @@
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-navigation": "^5.0.0",
-    "xlsx": "^0.18.5"
+    "xlsx-js-style": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

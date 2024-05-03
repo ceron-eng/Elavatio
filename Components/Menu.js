@@ -176,10 +176,7 @@ const TabNavigator = ({ userName, userRole }) => {
 
 
       );
-    } else if (userRole === 'Administrador' || userRole === 'Editor' || userRole === 'General') {
-
-    }
-    // Si el rol del usuario no es 'admin', no se muestra la pestaña de registro
+    } 
     return null;
   };
   if (userName != null && userName != "" && userRole != null) {

@@ -109,7 +109,7 @@ const ListGeneralView = ({ navigation }) => {
                                 name="download"
                                 size={24}
                                 color="black"
-                                onPress={() => handleExportToExcel(item)}
+                                onPress={() => exportToExcelCCM(item)}
                             />
                         </View>
                         <View style={styles.td}>

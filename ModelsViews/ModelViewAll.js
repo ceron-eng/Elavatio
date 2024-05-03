@@ -319,7 +319,7 @@ export const useCCMModel = () => {
       if (!nameTablero || !idCMMTab || !CMM || !areaCMM || !TD ||
         !prot1 || !prot2 || !inte1 || !inte2 || !tens1 || !tens2 ||
         !corr1 || !corr2 || !ICC1 || !ICC2 || !noPol1 || !noPol2 ||
-        !fusi1 || !fusi2 || !date) {
+        !fusi1 || !fusi2 || !date || !areTD) {
         alert('Por favor, completa todos los campos.');
         setLoading(false);
         return;
@@ -331,6 +331,7 @@ export const useCCMModel = () => {
         CMM,
         areaCMM,
         TD,
+        areTD,
         /*Tabla de datos generales */
         Proteccion: [
           {

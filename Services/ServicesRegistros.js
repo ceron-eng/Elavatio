@@ -215,6 +215,7 @@ export const updateCCM = async (CCMData) =>{
       CMM:CCMData.CMM,
       areaCMM:CCMData.areaCMM,
       TD:CCMData.TD,
+      areTD:CCMData.areTD,
       /*Tabla de datos generales */
       Proteccion: [
         {
