@@ -85,7 +85,7 @@ export const updateTD = async (TDData) => {
       barrasNeutros: TDData.barrasNeutros,
       puenteUnion: TDData.puenteUnion,
       barraTierra: TDData.barraTierra,
-      creatorUser : TDData.creatorUser,
+      creatorUser: TDData.creatorUser,
       UpdateDate: TDData.date ? TDData.date.toISOString().substring(0, 10).replace('T', '-') : '',
       userWhoEdited: TDData.userWhoEdited,
     });
@@ -111,7 +111,7 @@ export const updateTGD = async (TGDData) => {
       TGDData.ICC.trim() === '' ||
       TGDData.noPolos.trim() === '' ||
       TGDData.INOM.trim() === '' ||
-      TGDData.noPolos2.trim() === '' ||
+      TGDData.ICC2.trim() === '' ||
       TGDData.marcYTipTrans.trim() === '' ||
       TGDData.KVA.trim() === '' ||
       TGDData.tensDivisor.trim() === '' ||
@@ -128,7 +128,12 @@ export const updateTGD = async (TGDData) => {
       TGDData.calCabTie.trim() === '' ||
       TGDData.matCabTie.trim() === '' ||
       TGDData.long.trim() === '' ||
-      TGDData.canYmed.trim() === ''
+      TGDData.canYmed.trim() === '' ||
+      TGDData.marYModTab.trim() === '' ||
+      TGDData.tenNomTab.trim() === '' ||
+      TGDData.corrNomTab.trim() === '' ||
+      TGDData.ICCTab.trim() === '' ||
+      TGDData.noPolTab.trim() === ''
     ) {
       alert('Por favor, completa todos los campos. update ');
       return;
@@ -152,7 +157,7 @@ export const updateTGD = async (TGDData) => {
       noPolos: TGDData.noPolos,
       fusibles: TGDData.fusibles,
       INOM: TGDData.INOM,
-      noPolos2: TGDData.noPolos2,
+      ICC2: TGDData.ICC2,
       marcYTipTrans: TGDData.marcYTipTrans,
       KVA: TGDData.KVA,
       tensDivisor: TGDData.tensDivisor,
@@ -177,11 +182,16 @@ export const updateTGD = async (TGDData) => {
       long: TGDData.long,
       canYmed: TGDData.canYmed,
       protectionTab: TGDData.protectionTab,
+      marYModTab: TGDData.marYModTab,
+      tenNomTab: TGDData.tenNomTab,
+      corrNomTab: TGDData.corrNomTab,
+      ICCTab: TGDData.ICCTab,
+      noPolTab: TGDData.noPolTab,
       cargas: TGDData.cargas,
       barrasNeutros: TGDData.barrasNeutros,
       puenteUnion: TGDData.puenteUnion,
       barraTierra: TGDData.barraTierra,
-      creatorUser : TGDData.creatorUser,
+      creatorUser: TGDData.creatorUser,
       UpdateDate: TGDData.date ? TGDData.date.toISOString().substring(0, 10).replace('T', '-') : '',
       userWhoEdited: TGDData.userWhoEdited,
     });
@@ -193,7 +203,7 @@ export const updateTGD = async (TGDData) => {
   }
 }
 
-export const updateCCM = async (CCMData) =>{
+export const updateCCM = async (CCMData) => {
   try {
     if (!CCMData.nameTablero || !CCMData.idCMMTab || !CCMData.CMM || !CCMData.areaCMM || !CCMData.TD ||
       !CCMData.prot1 || !CCMData.prot2 || !CCMData.inte1 || !CCMData.inte2 || !CCMData.tens1 || !CCMData.tens2 ||
@@ -209,51 +219,51 @@ export const updateCCM = async (CCMData) =>{
       return { success: false, message: "El registro ya no existe" };
     }
 
-    await updateDoc(CCMDoc,{
+    await updateDoc(CCMDoc, {
       nameTablero: CCMData.nameTablero,
-      idCMMTab:CCMData.idCMMTab,
-      CMM:CCMData.CMM,
-      areaCMM:CCMData.areaCMM,
-      TD:CCMData.TD,
-      areTD:CCMData.areTD,
+      idCMMTab: CCMData.idCMMTab,
+      CMM: CCMData.CMM,
+      areaCMM: CCMData.areaCMM,
+      TD: CCMData.TD,
+      areTD: CCMData.areTD,
       /*Tabla de datos generales */
       Proteccion: [
         {
-          prot1:CCMData.prot1,
-          prot2:CCMData.prot2,
+          prot1: CCMData.prot1,
+          prot2: CCMData.prot2,
         }],
       Interruptor: [
         {
-          inte1:CCMData.inte1,
-          inte2:CCMData.inte2,
+          inte1: CCMData.inte1,
+          inte2: CCMData.inte2,
         }],
       TensionNormal: [
         {
-          tens1:CCMData.tens1,
-          tens2:CCMData.tens2,
+          tens1: CCMData.tens1,
+          tens2: CCMData.tens2,
         }],
       CorrienteNominal: [
         {
-          corr1:CCMData.corr1,
-          corr2:CCMData.corr2,
+          corr1: CCMData.corr1,
+          corr2: CCMData.corr2,
         }],
       ICC: [
         {
-          ICC1:CCMData.ICC1,
-          ICC2:CCMData.ICC2,
+          ICC1: CCMData.ICC1,
+          ICC2: CCMData.ICC2,
         }],
       NoPolos: [
         {
-          noPol1:CCMData.noPol1,
-          noPol2:CCMData.noPol2,
+          noPol1: CCMData.noPol1,
+          noPol2: CCMData.noPol2,
         }],
       Fusibles: [
         {
-          fusi1:CCMData.fusi1,
-          fusi2:CCMData.fusi2,
+          fusi1: CCMData.fusi1,
+          fusi2: CCMData.fusi2,
         }],
-      Newdate: CCMData.date ? CCMData.date.toISOString().substring(0, 10).replace('T', '-') : '',
-      creatorUser : CCMData.creatorUser,
+      UpdateDate: CCMData.date ? CCMData.date.toISOString().substring(0, 10).replace('T', '-') : '',
+      creatorUser: CCMData.creatorUser,
       userWhoEdited: CCMData.userWhoEdited,
     });
 

@@ -9,6 +9,12 @@ export const getListCCM = async () => {
         const querySnapshot = await getDocs(q);
         const usersList = [];
         querySnapshot.forEach((doc) => {
+            let userWhoEdited = null; // Inicializar userWhoEdited como null
+            let UpdateDate = null;
+            if (doc.data().userWhoEdited != null) {
+                userWhoEdited = doc.data().userWhoEdited;
+                UpdateDate = doc.data().UpdateDate;
+            }
             usersList.push({
                 idDoc: doc.id,
                 nameTablero: doc.data().nameTablero,
@@ -54,12 +60,10 @@ export const getListCCM = async () => {
                         fusi2: doc.data().Fusibles[0].fusi2,
                     }],
                 date: doc.data().date,
-                creatorUser: doc.data().creatorUser
+                creatorUser: doc.data().creatorUser,
+                userWhoEdited: userWhoEdited,
+                UpdateDate: UpdateDate
             });
-            // Verificar si existe el campo userWhoEdited
-            if (doc.data().userWhoEdited) {
-                userWhoEdited = doc.data().userWhoEdited;
-            }
         });
         return usersList;
     } catch (error) {
@@ -75,6 +79,12 @@ export const getListTD = async () => {
         const querySnapshot = await getDocs(q);
         const usersList = [];
         querySnapshot.forEach((doc) => {
+            let userWhoEdited = null; // Inicializar userWhoEdited como null
+            let UpdateDate = null;
+            if (doc.data().userWhoEdited != null) {
+                userWhoEdited = doc.data().userWhoEdited;
+                UpdateDate = doc.data().UpdateDate;
+            }
             usersList.push({
                 idDoc: doc.id,
                 name: doc.data().name,
@@ -120,11 +130,11 @@ export const getListTD = async () => {
                 barrasNeutros: doc.data().barrasNeutros ? "Si" : "No",
                 puenteUnion: doc.data().puenteUnion ? "Si" : "No",
                 barraTierra: doc.data().barraTierra ? "Si" : "No",
-                creatorUser: doc.data().creatorUser
+                date: doc.data().date,
+                creatorUser: doc.data().creatorUser,
+                userWhoEdited: userWhoEdited,
+                UpdateDate: UpdateDate
             });
-            if (doc.data().userWhoEdited) {
-                userWhoEdited = doc.data().userWhoEdited;
-            }
         });
         return (usersList);
     } catch (error) {
@@ -139,6 +149,12 @@ export const getListTGD = async () => {
         const querySnapshot = await getDocs(tgdRef);
         const tgdList = [];
         querySnapshot.forEach((doc) => {
+            let userWhoEdited = null; // Inicializar userWhoEdited como null
+            let UpdateDate = null;
+            if (doc.data().userWhoEdited != null) {
+                userWhoEdited = doc.data().userWhoEdited;
+                UpdateDate = doc.data().UpdateDate;
+            }
             tgdList.push({
                 idDoc: doc.id,
                 nameTablero: doc.data().nameTablero,
@@ -151,7 +167,7 @@ export const getListTGD = async () => {
                 noPolos: doc.data().noPolos,
                 fusibles: doc.data().fusibles ? "si" : "no",
                 INOM: doc.data().INOM,
-                noPolos2: doc.data().noPolos2,
+                ICC2: doc.data().ICC2,
                 marcYTipTrans: doc.data().marcYTipTrans,
                 KVA: doc.data().KVA,
                 tensDivisor: doc.data().tensDivisor,
@@ -182,16 +198,20 @@ export const getListTGD = async () => {
                 canYmed: doc.data().canYmed,
                 long: doc.data().long,
                 protectionTab: doc.data().protectionTab ? "Si" : "No",
+                marYModTab: doc.data().marYModTab,
+                tenNomTab: doc.data().tenNomTab,
+                corrNomTab: doc.data().corrNomTab,
+                ICCTab: doc.data().ICCTab,
+                noPolTab: doc.data().noPolTab,
                 cargas: doc.data().cargas,
                 barrasNeutros: doc.data().barrasNeutros ? "Si" : "No",
                 puenteUnion: doc.data().puenteUnion ? "Si" : "No",
                 barraTierra: doc.data().barraTierra ? "Si" : "No",
                 date: doc.data().date,
-                creatorUser: doc.data().creatorUser
+                creatorUser: doc.data().creatorUser,
+                userWhoEdited: userWhoEdited,
+                UpdateDate: UpdateDate
             });
-            if (doc.data().userWhoEdited) {
-                userWhoEdited = doc.data().userWhoEdited;
-            }
         });
         return tgdList;
     } catch (error) {

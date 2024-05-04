@@ -41,8 +41,8 @@ const EditTGDView = ({ route, navigation }) => {
         setfusibles,
         INOM,
         setINOM,
-        noPolos2,
-        setNoPolos2,
+        ICC2,
+        setICC2,
         marcYTipTrans,
         setMarcYTipTrans,
         KVA,
@@ -79,6 +79,16 @@ const EditTGDView = ({ route, navigation }) => {
         setCanYmed,
         protectionTab,
         setProtectionTab,
+        marYModTab,
+        setMarYModTab,
+        tenNomTab,
+        setTenNomTab,
+        corrNomTab,
+        setCorrNomTab,
+        ICCTab,
+        setICCTab,
+        noPolTab,
+        setNoPolTab,
         loading,
         setLoading,
         date,
@@ -141,7 +151,7 @@ const EditTGDView = ({ route, navigation }) => {
         setNoPolos(item.noPolos);
         setfusibles(item.fusibles === 'si' ? true : false);
         setINOM(item.INOM);
-        setNoPolos2(item.noPolos2);
+        setICC2(item.ICC2);
         setMarcYTipTrans(item.marcYTipTrans);
         setKVA(item.KVA);
         setTensDivisor(item.tensDivisor);
@@ -160,6 +170,11 @@ const EditTGDView = ({ route, navigation }) => {
         setLong(item.long);
         setCanYmed(item.canYmed);
         setProtectionTab(item.protectionTab === 'Si' ? true : false);
+        setMarYModTab(item.marYModTab);
+        setTenNomTab(item.tenNomTab);
+        setCorrNomTab(item.corrNomTab);
+        setICCTab(item.ICCTab);
+        setNoPolTab(item.noPolTab);
         setLoading(item.loading);
         setFormaRegistro(item.formaRegistro);
         setBarrasNeutros(item.barrasNeutros === 'Si' ? true : false);
@@ -197,7 +212,7 @@ const EditTGDView = ({ route, navigation }) => {
                 noPolos,
                 fusibles,
                 INOM,
-                noPolos2,
+                ICC2,
                 marcYTipTrans,
                 KVA,
                 tensDivisor,
@@ -216,6 +231,11 @@ const EditTGDView = ({ route, navigation }) => {
                 long,
                 canYmed,
                 protectionTab,
+                marYModTab,
+                tenNomTab,
+                corrNomTab,
+                ICCTab,
+                noPolTab,
                 barrasNeutros,
                 puenteUnion,
                 barraTierra,
@@ -378,12 +398,12 @@ const EditTGDView = ({ route, navigation }) => {
                 />
             </View>
             <View style={styles.inputContainer}>
-                <Text style={styles.label}>NO. POLOS</Text>
+                <Text style={styles.label}>ICC (KA)</Text>
                 <TextInput
                     style={[styles.input, styles.inputFullWidth]}
                     keyboardType="numeric"
-                    value={noPolos2}
-                    onChangeText={setNoPolos2}
+                    value={ICC2}
+                    onChangeText={setICC2}
                 />
             </View>
             <Text style={styles.label}>DATOS DEL TRANSFORMADOR</Text>
@@ -534,6 +554,51 @@ const EditTGDView = ({ route, navigation }) => {
                     onPress={() => setProtectionTab(!protectionTab)}
                 />
             </View>
+            <Text style={styles.label}>Informacion Lado Tablero</Text>
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>MARCA Y MODELO</Text>
+                <TextInput
+                    style={[styles.input, styles.inputFullWidth]}
+                    value={marYModTab}
+                    onChangeText={setMarYModTab}
+                />
+            </View>
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>TENSIÓN NOMINAL(VOLTS)</Text>
+                <TextInput
+                    style={[styles.input, styles.inputFullWidth]}
+                    keyboardType="numeric"
+                    value={tenNomTab}
+                    onChangeText={setTenNomTab}
+                />
+            </View>
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>CORRIENTE NOMINAL(AMPERES)</Text>
+                <TextInput
+                    style={[styles.input, styles.inputFullWidth]}
+                    keyboardType="numeric"
+                    value={corrNomTab}
+                    onChangeText={setCorrNomTab}
+                />
+            </View>
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>ICC(KA)</Text>
+                <TextInput
+                    style={[styles.input, styles.inputFullWidth]}
+                    keyboardType="numeric"
+                    value={ICCTab}
+                    onChangeText={setICCTab}
+                />
+            </View>
+            <View style={styles.inputContainer}>
+                <Text style={styles.label}>NO. POLOS (K)</Text>
+                <TextInput
+                    style={[styles.input, styles.inputFullWidth]}
+                    keyboardType="numeric"
+                    value={noPolTab}
+                    onChangeText={setNoPolTab}
+                />
+            </View>
 
             <Text style={styles.label}>Informacion de la carga</Text>
 
@@ -595,7 +660,6 @@ const EditTGDView = ({ route, navigation }) => {
                         onChangeText={setNoFasesCal}
                         style={[styles.tableInput, styles.flex1]}
                         value={noFasesCal}
-                        keyboardType="numeric"
                     />
 
                     <Text style={styles.tableHeader}>/N:</Text>
@@ -603,7 +667,6 @@ const EditTGDView = ({ route, navigation }) => {
                         onChangeText={setNoNeutrosCal}
                         style={[styles.tableInput, styles.flex1]}
                         value={noNeutrosCal}
-                        keyboardType="numeric"
                     />
 
                     <Text style={styles.tableHeader}>/T:</Text>
@@ -611,21 +674,18 @@ const EditTGDView = ({ route, navigation }) => {
                         onChangeText={setNoTierrasCal}
                         style={[styles.tableInput, styles.flex1]}
                         value={noTierrasCal}
-                        keyboardType="numeric"
                     />
                     <Text style={styles.tableHeader}>/C:</Text>
                     <TextInput
                         onChangeText={setCanal}
                         style={[styles.tableInput, styles.flex1]}
                         value={canal}
-                        keyboardType="numeric"
                     />
                     <Text style={styles.tableHeader}>/L:</Text>
                     <TextInput
                         style={[styles.tableInput, styles.flex1]}
                         onChangeText={setLonguitud}
                         value={longuitud}
-                        keyboardType="numeric"
                     />
                 </View>
 

@@ -469,7 +469,7 @@ export const useTGDModel = () => {
   const [noPolos, setNoPolos] = useState('');
   const [fusibles, setfusibles] = useState(false);
   const [INOM, setINOM] = useState('');
-  const [noPolos2, setNoPolos2] = useState('');
+  const [ICC2, setICC2] = useState('');
   const [marcYTipTrans, setMarcYTipTrans] = useState('');
   const [KVA, setKVA] = useState('');
   const [tensDivisor, setTensDivisor] = useState('');
@@ -490,6 +490,11 @@ export const useTGDModel = () => {
   const [protectionTab, setProtectionTab] = useState(false);
   const [loading, setLoading] = useState(false);
   const [canYmed, setCanYmed] = useState('');
+  const [marYModTab, setMarYModTab] = useState('');
+  const [tenNomTab, setTenNomTab] = useState('');
+  const [corrNomTab, setCorrNomTab] = useState('');
+  const [ICCTab, setICCTab] = useState('');
+  const [noPolTab, setNoPolTab] = useState('');
 
   const [nombreCarga, setNombreCarga] = useState('');
   const [formaRegistro, setFormaRegistro] = useState('');
@@ -513,10 +518,10 @@ export const useTGDModel = () => {
     try {
       setLoading(true);
       if (!nameTablero || !name || !idTGDTab || !interruptor || !tension || !corrNom ||
-        !ICC || !noPolos || !INOM || !noPolos2 || !marcYTipTrans || !KVA || !tensDivisor ||
+        !ICC || !noPolos || !INOM || !ICC2 || !marcYTipTrans || !KVA || !tensDivisor ||
         !tensCociente || !conexion || !porcZ || !noCabFas || !calCabFas || !matCabFas ||
         !noCabNeu || !calCabNeu || !matCabNeu || !noCabTie || !calCabTie || !matCabTie ||
-        !long || !canYmed) {
+        !long || !canYmed || !marYModTab|| !tenNomTab || !corrNomTab ||!ICCTab || !noPolTab) {
         alert('Por favor, completa todos los campos.');
         setLoading(false);
         return;
@@ -525,14 +530,14 @@ export const useTGDModel = () => {
         nameTablero,
         name,
         idTGDTab,
-        interruptor,
+        interruptor,  
         tension,
         corrNom,
         ICC,
         noPolos,
         fusibles,
         INOM,
-        noPolos2,
+        ICC2,
         marcYTipTrans,
         KVA,
         tensDivisor,
@@ -557,6 +562,11 @@ export const useTGDModel = () => {
         long,
         canYmed,
         protectionTab,
+        marYModTab,
+        tenNomTab,
+        corrNomTab,
+        ICCTab,
+        noPolTab,
         cargas,
         barrasNeutros,
         puenteUnion,
@@ -592,7 +602,7 @@ export const useTGDModel = () => {
     setNoPolos('');
     setfusibles(false);
     setINOM('');
-    setNoPolos2('');
+    setICC2('');
     setMarcYTipTrans('');
     setKVA('');
     setTensDivisor('');
@@ -611,6 +621,11 @@ export const useTGDModel = () => {
     setCanYmed('');
     setLong('');
     setProtectionTab(false);
+    setMarYModTab('');
+    setTenNomTab('');
+    setCorrNomTab('');
+    setICCTab('');
+    setNoPolTab('');
     setDate(new Date());
     setLoading(false);
     setNombreCarga('');
@@ -649,8 +664,8 @@ export const useTGDModel = () => {
     setfusibles,
     INOM,
     setINOM,
-    noPolos2,
-    setNoPolos2,
+    ICC2,
+    setICC2,
     marcYTipTrans,
     setMarcYTipTrans,
     KVA,
@@ -687,6 +702,16 @@ export const useTGDModel = () => {
     setLong,
     protectionTab,
     setProtectionTab,
+    marYModTab,
+    setMarYModTab,
+    tenNomTab,
+    setTenNomTab,
+    corrNomTab,
+    setCorrNomTab,
+    ICCTab,
+    setICCTab,
+    noPolTab,
+    setNoPolTab,
     loading,
     setLoading,
     date,

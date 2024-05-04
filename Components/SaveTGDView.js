@@ -17,7 +17,6 @@ import { useTGDModel } from '../ModelsViews/ModelViewAll' // Importar el modelo
 
 const SaveTGDView = ({ route }) => {
   const { userName } = route.params;
-  console.log(userName);
   const {
     nameTablero,
     setNameTablero,
@@ -39,8 +38,8 @@ const SaveTGDView = ({ route }) => {
     setfusibles,
     INOM,
     setINOM,
-    noPolos2,
-    setNoPolos2,
+    ICC2,
+    setICC2,
     marcYTipTrans,
     setMarcYTipTrans,
     KVA,
@@ -77,6 +76,16 @@ const SaveTGDView = ({ route }) => {
     setCanYmed,
     protectionTab,
     setProtectionTab,
+    marYModTab,
+    setMarYModTab,
+    tenNomTab,
+    setTenNomTab,
+    corrNomTab,
+    setCorrNomTab,
+    ICCTab,
+    setICCTab,
+    noPolTab,
+    setNoPolTab,
     loading,
     setLoading,
     date,
@@ -142,6 +151,15 @@ const SaveTGDView = ({ route }) => {
     setNoTierrasCal('');
     setCanal('');
     setLonguitud('');
+  };
+  const handleSaveAndRedirect = () => {
+    if (cargas.length === 0) {
+      Alert.alert('Error', 'Debes agregar al menos una carga antes de guardar el registro.');
+    } else {
+      // Ejecuta la función de guardado
+      handleSubmit(userName);
+      
+    }
   };
   const eliminarCarga = (index) => {
     const nuevasCargas = [...cargas];
@@ -240,12 +258,12 @@ const SaveTGDView = ({ route }) => {
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>NO. POLOS</Text>
+        <Text style={styles.label}>ICC (KA)</Text>
         <TextInput
           style={[styles.input, styles.inputFullWidth]}
           keyboardType="numeric"
-          value={noPolos2}
-          onChangeText={setNoPolos2}
+          value={ICC2}
+          onChangeText={setICC2}
         />
       </View>
       <Text style={styles.label}>DATOS DEL TRANSFORMADOR</Text>
@@ -396,6 +414,51 @@ const SaveTGDView = ({ route }) => {
           onPress={() => setProtectionTab(!protectionTab)}
         />
       </View>
+      <Text style={styles.label}>Informacion Lado Tablero</Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>MARCA Y MODELO</Text>
+        <TextInput
+          style={[styles.input, styles.inputFullWidth]}
+          value={marYModTab}
+          onChangeText={setMarYModTab}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>TENSIÓN NOMINAL(VOLTS)</Text>
+        <TextInput
+          style={[styles.input, styles.inputFullWidth]}
+          keyboardType="numeric"
+          value={tenNomTab}
+          onChangeText={setTenNomTab}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>CORRIENTE NOMINAL(AMPERES)</Text>
+        <TextInput
+          style={[styles.input, styles.inputFullWidth]}
+          keyboardType="numeric"
+          value={corrNomTab}
+          onChangeText={setCorrNomTab}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>ICC(KA)</Text>
+        <TextInput
+          style={[styles.input, styles.inputFullWidth]}
+          keyboardType="numeric"
+          value={ICCTab}
+          onChangeText={setICCTab}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>NO. POLOS (K)</Text>
+        <TextInput
+          style={[styles.input, styles.inputFullWidth]}
+          keyboardType="numeric"
+          value={noPolTab}
+          onChangeText={setNoPolTab}
+        />
+      </View>
 
       <Text style={styles.label}>Informacion de la carga</Text>
 
@@ -457,7 +520,6 @@ const SaveTGDView = ({ route }) => {
             onChangeText={setNoFasesCal}
             style={[styles.tableInput, styles.flex1]}
             value={noFasesCal}
-            keyboardType="numeric"
           />
 
           <Text style={styles.tableHeader}>/N:</Text>
@@ -465,7 +527,6 @@ const SaveTGDView = ({ route }) => {
             onChangeText={setNoNeutrosCal}
             style={[styles.tableInput, styles.flex1]}
             value={noNeutrosCal}
-            keyboardType="numeric"
           />
 
           <Text style={styles.tableHeader}>/T:</Text>
@@ -473,21 +534,18 @@ const SaveTGDView = ({ route }) => {
             onChangeText={setNoTierrasCal}
             style={[styles.tableInput, styles.flex1]}
             value={noTierrasCal}
-            keyboardType="numeric"
           />
           <Text style={styles.tableHeader}>/C:</Text>
           <TextInput
             onChangeText={setCanal}
             style={[styles.tableInput, styles.flex1]}
             value={canal}
-            keyboardType="numeric"
           />
           <Text style={styles.tableHeader}>/L:</Text>
           <TextInput
             style={[styles.tableInput, styles.flex1]}
             onChangeText={setLonguitud}
             value={longuitud}
-            keyboardType="numeric"
           />
         </View>
 
@@ -558,14 +616,7 @@ const SaveTGDView = ({ route }) => {
       ) : (
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            if (cargas.length === 0) {
-              Alert.alert('Error', 'Debes agregar al menos una carga antes de guardar el registro.');
-            } else {
-              handleSubmit(userName);
-            }
-          }
-          }
+          onPress={handleSaveAndRedirect}
         >
           <Text style={styles.buttonText}>Guardar</Text>
         </TouchableOpacity>
